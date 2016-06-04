@@ -49,9 +49,10 @@ function confirmOverwrite(){
 
 function copyFiles(distdir){
   const srcdir = __dirname + "/../pan/";
-  const filesName = [".gitignore", ".babelrc", "dist", "public", "src", "tests", 
+  const filesName = [".babelrc", "dist", "public", "src", "tests", 
   "index.js", "karma.conf.js", "package.json", "webpack.config.js"];
   
+  npmignore2gitignore(srcdir, distdir);
   return Promise.map(filesName, (fname) => {
     let src = srcdir + fname;
     let dist = distdir + fname;
@@ -59,5 +60,14 @@ function copyFiles(distdir){
       let message = "    " + clc.cyan.bold("create") + "  " + fname;
       console.log(message);
     });
+  });
+}
+
+function npmignore2gitignore(srcdir, distdir){
+  let src = srcdir + ".npmignore";
+  let dist = distdir + ".gitignore";
+  return ncp.ncpAsync(src, dist).then(() => { 
+    let message = "    " + clc.cyan.bold("create") + "  " + ".gitignore";
+    console.log(message);
   });
 }
