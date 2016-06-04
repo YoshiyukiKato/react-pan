@@ -2,13 +2,14 @@
 A template to develop react.js component by using webpack, babel, and karma. 
 
 # usage
+## init
 ```shell
-$ git clone git@github.com/YoshiyukiKato/react-pan
-$ cd react-component-template && npm install
-## install some components to use
-$ $(npm bin)/webpack-dev-server 
+$ npm install react-pan -g
+$ react-pan myapp
+$ cd myapp && npm install
+$ webpack-dev-server
 ```
-Then the server runs on `http://localhost:8080`.
+Then webpack dev server runs on `http://localhost:8080`.
 
 ## develop your own app
 `./src` is the directory to put source files of your app. Since those files will be loaded by webpack, you have to install appropriate `loader` and add configuration about the loader to `webpack.config.js`. An example case of `svg-inline-loader` is shown in below.
