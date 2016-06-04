@@ -6,6 +6,10 @@
   "bin": {
     "react-pan": "bin/react-pan"
   },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/YoshiyukiKato/react-pan.git"
+  },
   "author": "Yoshiyuki Kato",
   "license": "MIT",
   "dependencies": {
