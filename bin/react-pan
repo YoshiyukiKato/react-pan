@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+const Promise = require("bluebird");
+const fs = Promise.promisifyAll(require("fs"));
+const readline = require("readline");
+const rl = Promise.promisifyAll(readline.createInterface({ input: process.stdin, output: process.stdout }));
+const ncp = Promise.promisifyAll(require("ncp"));
+const clc = require("cli-color");
+
+init();
+
+function init(){
+  let target = process.argv[2];
+  if(!target) throw new Error("Project name is not given");
+  let distdir = process.cwd() + "/" + target + "/";
+
+  fs.accessAsync(distdir, fs.F_OK)
+  .catch((err) => {
+    return true;
+  })
+  .then((notExist) => {
+    if(!notExist) return confirmOverwrite();
+    else return fs.mkdirAsync(distdir);
+  })
+  .catch((err) => { throw err; })
+  .then(() => {
+    return copyFiles(distdir);
+  })
+  .catch((err) => { throw err; })
+  .then(function(){
+    console.log("    " + clc.cyan.bold("complete"));
+    console.log("    " + clc.cyan.bold("$") + " cd " + target + " && npm install");
+    process.exit(0);
+  })
+  .catch((err) => {
+    let message = "    " + clc.red.bold("aborted") + " " + err.message;
+    console.log(message);
+    process.exit(1);
+  });
+}
+
+function confirmOverwrite(){
+  return rl.questionAsync("Target is already exist. You want to overwrite?: [Y/n]")
+  .catch((answer) => {
+    if(answer.message === "n") throw new Error("  overwrite unaccepted");
+    rl.close();
+  })
+}
+
+function copyFiles(distdir){
+  const srcdir = __dirname + "/../pan/";
+  const filesName = [".gitignore", ".babelrc", "dist", "public", "src", "tests", 
+  "index.js", "karma.conf.js", "package.json", "webpack.config.js"];
+  
+  return Promise.map(filesName, (fname) => {
+    let src = srcdir + fname;
+    let dist = distdir + fname;
+    return ncp.ncpAsync(src, dist).then(() => { 
+      let message = "    " + clc.cyan.bold("create") + "  " + fname;
+      console.log(message);
+    });
+  });
+}
