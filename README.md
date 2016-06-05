@@ -16,26 +16,25 @@ Then webpack dev server runs on `http://localhost:8080`.
 ## develop your own app
 ### structure
 ```
-.
-├── .babelrc
-├── .gitignore
+myapp
 ├── dist
-│   └── index.js
+│   ├── umd
+│   │   └── index.js
+│   └── web
+│       ├── index.html
+│       └── index.js
 ├── index.js
 ├── karma.conf.js
 ├── package.json
-├── public
-│   ├── index.html
-│   └── index.js
 ├── src
-│   ├── jsx
-│   │   ├── app.jsx
-│   │   ├── dist_index.jsx
-│   │   └── public_index.jsx
-│   └── sass
-│       └── app.scss
+│   ├── jsx
+│   │   ├── app.jsx
+│   │   ├── umd_index.jsx
+│   │   └── web_index.jsx
+│   └── sass
+│       └── app.scss
 ├── tests
-│   └── dist_spec.js
+│   └── dist_spec.js
 └── webpack.config.js
 ```
 ### src
@@ -61,20 +60,16 @@ $ npm install --save-dev svg-inline-loader
 ...
 ```
 #### build sources
-To build source files, run `webpack` command. By default, `react-pan` supposes two different forms of component, `umd` and `web`.
+To build source files, run `webpack` command. By default, `react-pan` supposes two different forms of component, `umd` and `web`. The `umd` (Universal Module Definition) is a form of importable component. The `web` is a form of runnable component on web browser. 
 ```shell
 $ $(npm bin)/webpack
 ```
+### dist/umd
+`./dist/umd` is the directory to put files complied as `umd` component by webpack from source files in `./src`.
 
-##### umd
-The `umd` (Universal Module Definition) is a form of importable component. The directory of the umd component is `./dist`.
-##### web
-The `web` is a form of runnable component on web browser. The directory of the component is `./public`
+### dist/web
+`./dist/web` is the directory to put files to load webpack-dev-server. Those files are complied as web-runnable form by webpack from source files in `./src`.
 
-### dist
-`./dist` is the directory to put files complied as `umd` component by webpack from source files in `./src`.
-### public
-`./public` is the directory to put files to load webpack-dev-server. Those files are complied as web-runnable form by webpack from source files in `./src`.
 ### tests
 `./tests` is the directory to put test code. All test runs on karma. The default test framework is mocha, assertion module is power-assert. `npm test` command runs all test files matching with `./tests/*_spec.js`.
 
