@@ -7,18 +7,43 @@ A template to develop react.js component by using webpack, babel, and karma.
 $ npm install react-pan -g
 $ react-pan myapp
 $ cd myapp && npm install
-$ webpack-dev-server
+$ $(npm bin)/webpack-dev-server
 ```
 Then webpack dev server runs on `http://localhost:8080`.
 
 ## develop your own app
+### structure
+```
+.
+├── .babelrc
+├── .gitignore
+├── dist
+│   └── index.js
+├── index.js
+├── karma.conf.js
+├── package.json
+├── public
+│   ├── index.html
+│   └── index.js
+├── src
+│   ├── jsx
+│   │   ├── app.jsx
+│   │   ├── dist_index.jsx
+│   │   └── public_index.jsx
+│   └── sass
+│       └── app.scss
+├── tests
+│   └── dist_spec.js
+└── webpack.config.js
+```
+### src
 `./src` is the directory to put source files of your app. Since those files will be loaded by webpack, you have to install appropriate `loader` and add configuration about the loader to `webpack.config.js`. An example case of `svg-inline-loader` is shown in below.
 
-### install loader
+#### install loader
 ```sh
 $ npm install --save-dev svg-inline-loader
 ```
-### add loader configuration
+#### add loader configuration
 ```js
 //webpack.config.js
 ...
@@ -33,13 +58,23 @@ $ npm install --save-dev svg-inline-loader
   },
 ...
 ```
+#### build sources
+To build source files, run `webpack` command. By default, `react-pan` supposes two different forms of component, `umd` and `web`.
+```shell
+$ $(npm bin)/webpack
+```
 
-## build
-By default, this template build your app by two different forms, `umd` and `web`. The `webpack` command generates components about these two types.
-### umd
-umd (Universal Module Definition) is a form of importable component. The component is built into `./dist`.
-### web
-A form of runnable component on web browser. The component is build into `./public`
+##### umd
+The `umd` (Universal Module Definition) is a form of importable component. The directory of the umd component is `./dist`.
+##### web
+The `web` is a form of runnable component on web browser. The directory of the component is `./public`
+
+### dist
+`./dist` is the directory to put files complied as `umd` component by webpack from source files in `./src`.
+### public
+`./public` is the directory to put files to load webpack-dev-server. Those files are complied as web-runnable form by webpack from source files in `./src`.
+### tests
+`./tests` is the directory to put test code. All test runs on karma. The default test framework is mocha, assertion module is power-assert. `npm test` command runs all test files matching with `./tests/*_spec.js`.
 
 # LICENSE
 MIT
