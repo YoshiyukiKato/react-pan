@@ -49,7 +49,7 @@ function confirmOverwrite(){
 
 function copyFiles(distdir){
   const srcdir = __dirname + "/../pan/";
-  const filesName = [".babelrc", "dist", "public", "src", "tests", 
+  const filesName = [".babelrc", "dist", "src", "tests", 
   "index.js", "karma.conf.js", "package.json", "webpack.config.js"];
   
   npmignore2gitignore(srcdir, distdir);

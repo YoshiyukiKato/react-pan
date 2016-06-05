@@ -1,7 +1,7 @@
 import React from 'react';
 import * as TestUtils from 'react/lib/ReactTestUtils'; 
 import assert from 'power-assert';
-import App from '../dist'; 
+import App from '../umd/dist'; 
 
 describe('App', () => {
   it('renders without problems', () => {
