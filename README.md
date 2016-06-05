@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/YoshiyukiKato/react-pan/badges/gpa.svg)](https://codeclimate.com/github/YoshiyukiKato/react-pan)
+
 # react-pan
 A template to develop react.js component by using webpack, babel, and karma. 
 
